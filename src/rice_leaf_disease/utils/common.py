@@ -15,28 +15,41 @@ from box import ConfigBox
 
 
 @ensure_annotations
-def read_yaml(path_to_yaml: Path) -> ConfigBox: 
+def read_yaml(path_to_yaml: Path) -> ConfigBox:
     """
     Reads a yaml file and returns its content
     
     Args: 
-        - path_to_yaml (Path): path like input
+        - path_to_yaml (Path): Path-like input to the YAML file
     
     Raises:
-        - ValueError: if the yaml file is empty
-        - e: empty file
-        
+        - ValueError: if the YAML file is empty
+        - Exception: if there is any other error while reading the file
+    
     Returns:
-        - ConfigBox type
+        - ConfigBox: The content of the YAML file wrapped in a ConfigBox
     """
     try:
-        with open(path_to_yaml) as yaml_file:
-            content = yaml.safe_load(path_to_yaml)
-            logger.info(f"YAML file: {path_to_yaml}  loaded successfully!")
+        # Open the YAML file and load its content
+        with open(path_to_yaml, 'r') as yaml_file:
+            content = yaml.safe_load(yaml_file)
+            
+            # Check if the YAML file is empty
+            if content is None:
+                raise ValueError("Empty YAML file")
+            
+            logger.info(f"YAML file: {path_to_yaml} loaded successfully!")
+            
+            # Return the content as a ConfigBox
             return ConfigBox(content)
-    except BoxValueError:
-        raise ValueError("Empty YAML file")
+    
+    except ValueError as ve:
+        # Handle empty YAML file error
+        raise ve
+    
     except Exception as e:
+        # Catch any other exception and raise it
+        logger.error(f"Error reading YAML file {path_to_yaml}: {e}")
         raise e
 
 
