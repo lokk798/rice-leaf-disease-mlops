@@ -1,1 +1,28 @@
-key: val
+model_params:
+  input_shape: [180, 180, 3]  # Example: Height, Width, Channels (224x224 RGB images)
+  num_classes: 3
+  layers:
+    conv1:
+      filters: 16
+      kernel_size: 3
+      activation: 'relu'
+      dropout_rate: 0.25
+    conv2:
+      filters: 32
+      kernel_size: 3
+      activation: 'relu'
+      dropout_rate: 0.25
+    conv3:
+      filters: 64
+      kernel_size: 3
+      activation: 'relu'
+      dropout_rate: 0.0  # No dropout for the last conv layer
+    dense1:
+      units: 128
+      activation: 'relu'
+    dense2:
+      units: 3
+      activation: 'softmax'
+  optimizer: 'adam'
+  loss_function: 'SparseCategoricalCrossentropy'
+  metrics: ['accuracy']
