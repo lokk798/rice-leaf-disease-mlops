@@ -5,7 +5,7 @@ and handles the process of preparing raw data for further steps in
 the pipeline.
 """
 
-from rice_leaf_disease.component.data_ingestion import DataIngestion
+from rice_leaf_disease.components.data_ingestion import DataIngestion
 from rice_leaf_disease.config.configuration import ConfigurationManager
 from rice_leaf_disease import logger
 

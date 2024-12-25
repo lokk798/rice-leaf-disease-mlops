@@ -1,5 +1,6 @@
+import os
 from rice_leaf_disease.utils.common import read_yaml, create_directories
-from rice_leaf_disease.entity.config_entity import DataIngestionConfig, PrepareModelConfig
+from rice_leaf_disease.entity.config_entity import DataIngestionConfig, PrepareCallbackConfig, PrepareModelConfig
 from rice_leaf_disease.constants import *
 
 class ConfigurationManager:
@@ -18,8 +19,8 @@ class ConfigurationManager:
     
     def get_data_ingestion_config(self) -> DataIngestionConfig:
         """
-        Retrieves and prepares the configuration specific to 
-        the data ingestion step.
+        Retrieves and prepares the configuration specific 
+        to the data ingestion step.
         """
         
         config = self.config.data_ingestion
@@ -35,7 +36,11 @@ class ConfigurationManager:
         
         return data_ingestion_config
     
-    def get_prepare_model_config(self) -> PrepareModelConfig:
+    def get_prepare_model_config(self) -> PrepareModelConfig:      
+        """
+        Returns model configuration paths and model parameters.
+        """
+        
         config = self.config.prepare_model  # Access prepare_model section in config
         create_directories([config.root_dir])  # Create root directory if it doesn't exist
         
@@ -81,3 +86,18 @@ class ConfigurationManager:
         )
         
         return prepare_model_config
+
+    def get_prepare_callback_config(self) -> PrepareCallbackConfig:
+        config = self.config.prepare_callbacks
+        model_checkpoint_dir = os.path.dirname(config.checkpoint_model_filepath)
+        
+        create_directories([Path(model_checkpoint_dir),
+                            Path(config.tensorboard_root_log_dir)])
+        
+        prepare_callback_config = PrepareCallbackConfig(
+            root_dir=Path(config.root_dir),
+            tensorboard_root_log_dir=Path(config.tensorboard_root_log_dir),
+            checkpoint_model_filepath=Path(config.checkpoint_model_filepath)    
+        )
+        
+        return prepare_callback_config

@@ -1,4 +1,4 @@
-from rice_leaf_disease.component.prepare_model import PrepareModel
+from rice_leaf_disease.components.prepare_model import PrepareModel
 from rice_leaf_disease.config.configuration import ConfigurationManager
 from rice_leaf_disease import logger
 
