@@ -88,3 +88,11 @@ class TrainingConfig:
     params_optimizer: str
     params_loss: str
     params_metrics: list
+
+@dataclass(frozen=True)
+class EvaluationConfig:
+    model_path: Path
+    training_data: Path
+    all_params: dict
+    params_image_size: list
+    

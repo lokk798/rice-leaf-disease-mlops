@@ -1,6 +1,6 @@
 import os
 from rice_leaf_disease.utils.common import read_yaml, create_directories
-from rice_leaf_disease.entity.config_entity import DataIngestionConfig, PrepareCallbackConfig, PrepareModelConfig, TrainingConfig
+from rice_leaf_disease.entity.config_entity import DataIngestionConfig, EvaluationConfig, PrepareCallbackConfig, PrepareModelConfig, TrainingConfig
 from rice_leaf_disease.constants import *
 
 class ConfigurationManager:
@@ -125,3 +125,13 @@ class ConfigurationManager:
         )
         
         return training_config
+    
+    def get_evaluation_config(self) -> EvaluationConfig:
+        eval_config = EvaluationConfig(
+            model_path=Path('artifacts/training/model.keras'),
+            training_data=Path('artifacts/data_ingestion/rice_leaf_diseases'),
+            all_params=self.params,
+            params_image_size=self.params.model_params.input_shape
+        )
+        
+        return eval_config
