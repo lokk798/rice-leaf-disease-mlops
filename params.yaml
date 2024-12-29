@@ -1,5 +1,7 @@
 model_params:
-  input_shape: [180, 180, 3]  # Example: Height, Width, Channels (224x224 RGB images)
+  epochs: 30
+  augmentation: False
+  input_shape: [180, 180, 3]  # Example: Height, Width, Channels (180x180 RGB images)
   num_classes: 3
   layers:
     conv1:

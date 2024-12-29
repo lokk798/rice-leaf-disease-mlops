@@ -73,3 +73,18 @@ class PrepareCallbackConfig:
     root_dir: Path
     tensorboard_root_log_dir: Path
     checkpoint_model_filepath: Path
+
+@dataclass(frozen=True)
+class TrainingConfig:
+    """
+    Configuration class for training parameters.
+    """
+    root_dir: Path
+    trained_model_path: Path
+    training_data: Path
+    params_epochs: int
+    params_input_shape: list
+    params_augmentation: bool
+    params_optimizer: str
+    params_loss: str
+    params_metrics: list

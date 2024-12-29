@@ -1,6 +1,6 @@
 import os
 from rice_leaf_disease.utils.common import read_yaml, create_directories
-from rice_leaf_disease.entity.config_entity import DataIngestionConfig, PrepareCallbackConfig, PrepareModelConfig
+from rice_leaf_disease.entity.config_entity import DataIngestionConfig, PrepareCallbackConfig, PrepareModelConfig, TrainingConfig
 from rice_leaf_disease.constants import *
 
 class ConfigurationManager:
@@ -101,3 +101,27 @@ class ConfigurationManager:
         )
         
         return prepare_callback_config
+    
+    def get_training_config(self) -> TrainingConfig:
+        training = self.config.training
+        prepare_model = self.config.prepare_model
+        params = self.params
+        
+        training_data = os.path.join(self.config.data_ingestion.unzip_dir, 'rice_leaf_diseases')
+        
+        create_directories([Path(training.root_dir)])
+        
+        training_config = TrainingConfig(
+            root_dir = Path(training.root_dir),
+            trained_model_path = Path(training.trained_model_path),
+            training_data = Path(training_data),
+            params_epochs = params.model_params.epochs,
+            params_input_shape = params.model_params.input_shape,
+            params_augmentation = params.model_params.augmentation,
+            params_optimizer=params.model_params.optimizer,
+            params_loss=params.model_params.loss_function,
+            params_metrics=params.model_params.metrics
+               
+        )
+        
+        return training_config
