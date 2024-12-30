@@ -1,0 +1,68 @@
+stages:
+  data_ingestion:
+    cmd: python src/rice_leaf_disease/pipeline/stage_01_data_ingestion.py
+    deps:
+      - src/rice_leaf_disease/pipeline/stage_01_data_ingestion.py
+      - config/config.yaml
+    outs:
+      - artifacts/data_ingestion/rice_leaf_diseases
+
+  prepare_model:
+    cmd: python src/rice_leaf_disease/pipeline/stage_02_prepare_model.py
+    deps:
+      - src/rice_leaf_disease/pipeline/stage_02_prepare_model.py
+      - config/config.yaml
+    params:
+      - model_params.input_shape
+      - model_params.num_classes
+      - model_params.optimizer
+      - model_params.loss_function
+      - model_params.metrics
+      - model_params.layers.conv1.filters
+      - model_params.layers.conv1.kernel_size
+      - model_params.layers.conv1.activation
+      - model_params.layers.conv1.dropout_rate
+      - model_params.layers.conv2.filters
+      - model_params.layers.conv2.kernel_size
+      - model_params.layers.conv2.activation
+      - model_params.layers.conv2.dropout_rate
+      - model_params.layers.conv3.filters
+      - model_params.layers.conv3.kernel_size
+      - model_params.layers.conv3.activation
+      - model_params.layers.conv3.dropout_rate
+      - model_params.layers.dense1.units
+      - model_params.layers.dense1.activation
+      - model_params.layers.dense2.units
+      - model_params.layers.dense2.activation
+    outs:
+      - artifacts/prepare_model
+
+  training:
+    cmd: python src/rice_leaf_disease/pipeline/stage_03_training.py
+    deps:
+      - src/rice_leaf_disease/pipeline/stage_03_training.py
+      - src/rice_leaf_disease/components/prepare_callbacks.py
+      - config/config.yaml
+      - artifacts/data_ingestion/rice_leaf_diseases
+      - artifacts/prepare_model
+    params:
+      - model_params.input_shape
+      - model_params.augmentation
+      - model_params.optimizer
+      - model_params.loss_function
+      - model_params.metrics
+    outs:
+      - artifacts/training/model.keras
+
+  evaluation:
+    cmd: python src/rice_leaf_disease/pipeline/stage_04_evaluation.py
+    deps:
+      - src/rice_leaf_disease/pipeline/stage_04_evaluation.py
+      - artifacts/data_ingestion/rice_leaf_diseases
+      - artifacts/training/model.keras
+      - config/config.yaml
+    params:
+      - model_params.input_shape
+    metrics:
+      - artifacts/evaluation/score.json:
+          cache: false

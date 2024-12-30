@@ -1,8 +1,11 @@
 model_params:
   epochs: 30
   augmentation: False
-  input_shape: [180, 180, 3]  # Example: Height, Width, Channels (180x180 RGB images)
+  input_shape: [180, 180, 3]  
   num_classes: 3
+  optimizer: 'adam'
+  loss_function: 'SparseCategoricalCrossentropy'
+  metrics: ['accuracy']
   layers:
     conv1:
       filters: 16
@@ -25,6 +28,3 @@ model_params:
     dense2:
       units: 3
       activation: 'softmax'
-  optimizer: 'adam'
-  loss_function: 'SparseCategoricalCrossentropy'
-  metrics: ['accuracy']

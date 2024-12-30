@@ -1,0 +1,135 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/rice_leaf_disease/pipeline/stage_01_data_ingestion.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 123d48715395a4bd6ec84032ed29ae99
+      size: 632
+    - path: src/rice_leaf_disease/pipeline/stage_01_data_ingestion.py
+      hash: md5
+      md5: 180864293d835b3a0f822917ff52ddfa
+      size: 1252
+    outs:
+    - path: artifacts/data_ingestion/rice_leaf_diseases
+      hash: md5
+      md5: 56dd0d390a0dfcdc11615651ae1e16e9.dir
+      size: 39733699
+      nfiles: 120
+  prepare_model:
+    cmd: python src/rice_leaf_disease/pipeline/stage_02_prepare_model.py
+    deps:
+    - path: config/config.yaml
+      hash: md5
+      md5: 123d48715395a4bd6ec84032ed29ae99
+      size: 632
+    - path: src/rice_leaf_disease/pipeline/stage_02_prepare_model.py
+      hash: md5
+      md5: 33a218e1313e1bddccacf7f04a0475e5
+      size: 892
+    params:
+      params.yaml:
+        model_params.input_shape:
+        - 180
+        - 180
+        - 3
+        model_params.layers.conv1.activation: relu
+        model_params.layers.conv1.dropout_rate: 0.25
+        model_params.layers.conv1.filters: 16
+        model_params.layers.conv1.kernel_size: 3
+        model_params.layers.conv2.activation: relu
+        model_params.layers.conv2.dropout_rate: 0.25
+        model_params.layers.conv2.filters: 32
+        model_params.layers.conv2.kernel_size: 3
+        model_params.layers.conv3.activation: relu
+        model_params.layers.conv3.dropout_rate: 0.0
+        model_params.layers.conv3.filters: 64
+        model_params.layers.conv3.kernel_size: 3
+        model_params.layers.dense1.activation: relu
+        model_params.layers.dense1.units: 128
+        model_params.layers.dense2.activation: softmax
+        model_params.layers.dense2.units: 3
+        model_params.loss_function: SparseCategoricalCrossentropy
+        model_params.metrics:
+        - accuracy
+        model_params.num_classes: 3
+        model_params.optimizer: adam
+    outs:
+    - path: artifacts/prepare_model
+      hash: md5
+      md5: 26a613e29afbf93e6d77c1d7c90aa40b.dir
+      size: 15991622
+      nfiles: 1
+  training:
+    cmd: python src/rice_leaf_disease/pipeline/stage_03_training.py
+    deps:
+    - path: artifacts/data_ingestion/rice_leaf_diseases
+      hash: md5
+      md5: 56dd0d390a0dfcdc11615651ae1e16e9.dir
+      size: 39733699
+      nfiles: 120
+    - path: artifacts/prepare_model
+      hash: md5
+      md5: 26a613e29afbf93e6d77c1d7c90aa40b.dir
+      size: 15991622
+      nfiles: 1
+    - path: config/config.yaml
+      hash: md5
+      md5: 123d48715395a4bd6ec84032ed29ae99
+      size: 632
+    - path: src/rice_leaf_disease/components/prepare_callbacks.py
+      hash: md5
+      md5: aca1638c7a569d454bf910e90fffdb52
+      size: 1382
+    - path: src/rice_leaf_disease/pipeline/stage_03_training.py
+      hash: md5
+      md5: 62995bcf81f962f7534abf21d7da546e
+      size: 1215
+    params:
+      params.yaml:
+        model_params.augmentation: false
+        model_params.input_shape:
+        - 180
+        - 180
+        - 3
+        model_params.loss_function: SparseCategoricalCrossentropy
+        model_params.metrics:
+        - accuracy
+        model_params.optimizer: adam
+    outs:
+    - path: artifacts/training/model.keras
+      hash: md5
+      md5: 0a5e06edac4bcba8ed37284e74317dea
+      size: 47910992
+  evaluation:
+    cmd: python src/rice_leaf_disease/pipeline/stage_04_evaluation.py
+    deps:
+    - path: artifacts/data_ingestion/rice_leaf_diseases
+      hash: md5
+      md5: 56dd0d390a0dfcdc11615651ae1e16e9.dir
+      size: 39733699
+      nfiles: 120
+    - path: artifacts/training/model.keras
+      hash: md5
+      md5: 0a5e06edac4bcba8ed37284e74317dea
+      size: 47910992
+    - path: config/config.yaml
+      hash: md5
+      md5: 123d48715395a4bd6ec84032ed29ae99
+      size: 632
+    - path: src/rice_leaf_disease/pipeline/stage_04_evaluation.py
+      hash: md5
+      md5: a93e060aff8c17aa163fc92856b2a6a3
+      size: 979
+    params:
+      params.yaml:
+        model_params.input_shape:
+        - 180
+        - 180
+        - 3
+    outs:
+    - path: artifacts/evaluation/score.json
+      hash: md5
+      md5: 16986590dcf00282e72ed4f9e17f9247
+      size: 78

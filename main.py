@@ -2,7 +2,7 @@ from rice_leaf_disease import logger
 from rice_leaf_disease.pipeline.stage_01_data_ingestion import DataIngestionTrainingPipeline
 from rice_leaf_disease.pipeline.stage_03_training import ModelTrainingPipeline
 from rice_leaf_disease.pipeline.stage_04_evaluation import EvaluationPipeline
-from rice_leaf_disease.pipeline.state_02_prepare_model import PrepareModelTrainingPipeline
+from rice_leaf_disease.pipeline.stage_02_prepare_model import PrepareModelTrainingPipeline
 from colorama import Fore, Style
 
 STAGE_NAME = "Data Ingestion stage"
