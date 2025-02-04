@@ -1,0 +1,101 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    padding: 20px;
+}
+
+/* Main Container */
+.container {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    border: 2px solid #d1e7dd;
+}
+
+/* Heading */
+h1 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #0b5ed7;
+}
+
+/* Image Preview */
+#imagePreview {
+    width: 100%;
+    max-height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: none;
+    margin-bottom: 15px;
+    border: 2px solid #0b5ed7;
+}
+
+/* Upload Button */
+.upload-label {
+    display: block;
+    background-color: #0b5ed7;
+    color: white;
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background 0.3s;
+}
+
+.upload-label:hover {
+    background-color: #0b5ed7;
+}
+
+/* Hidden File Input */
+input[type="file"] {
+    display: none;
+}
+
+/* Predict Button */
+button {
+    background-color: #0d6efd;
+    color: white;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    margin-top: 10px;
+    transition: background 0.3s;
+    width: 100%;
+}
+
+button:disabled {
+    background-color: #adb5bd;
+    cursor: not-allowed;
+}
+
+button:hover {
+    background-color: #0b5ed7;
+}
+
+/* Prediction Result */
+#predictionResult {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #0b5ed7;
+}

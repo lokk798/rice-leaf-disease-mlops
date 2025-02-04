@@ -1,4 +1,4 @@
-from rice_leaf_disease.components.evaluation import Evaluation
+from rice_leaf_disease.components.evaluation import Evaluationdi
 from rice_leaf_disease.config.configuration import ConfigurationManager  
 from rice_leaf_disease import logger
 

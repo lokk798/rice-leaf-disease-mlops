@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rice Leaf Disease Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Rice Leaf Disease Detector</h1>
+        <img id="imagePreview" alt="Uploaded Image">
+        <label for="fileInput" class="upload-label">Upload an Image</label>
+        <input type="file" id="fileInput" accept="image/*">
+        <button id="predictBtn" disabled>Predict</button>
+        <p id="predictionResult"></p>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
