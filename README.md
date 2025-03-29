@@ -51,3 +51,13 @@ dvc init
 ```bash
 dvc repro
 ```
+
+## App Screenshots
+
+### Image Upload
+
+![Upload Image](screenshots/upload.png)
+
+### Prediction Result
+
+![Prediction Output](screenshots/result.png)
