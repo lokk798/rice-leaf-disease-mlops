@@ -6,17 +6,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rice Leaf Disease Detector</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 </head>
 
 <body>
+    <div class="app-container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-leaf"></i>
+                <h1>Rice Leaf Disease Detector</h1>
+            </div>
+            <p class="tagline">Upload a rice leaf image to detect disease</p>
+        </header>
 
-    <div class="container">
-        <h1>Rice Leaf Disease Detector</h1>
-        <img id="imagePreview" alt="Uploaded Image">
-        <label for="fileInput" class="upload-label">Upload an Image</label>
-        <input type="file" id="fileInput" accept="image/*">
-        <button id="predictBtn" disabled>Predict</button>
-        <p id="predictionResult"></p>
+        <main>
+            <div class="upload-container">
+                <div id="drop-area" class="drop-area">
+                    <div class="image-preview-container">
+                        <img id="imagePreview" alt="Preview" style="display: none;">
+                        <div id="placeholder" class="placeholder">
+                            <i class="fas fa-camera"></i>
+                            <p>Drag & drop an image or click to browse</p>
+                        </div>
+                    </div>
+                    <input type="file" id="fileInput" accept="image/*" hidden>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="uploadBtn" class="btn btn-secondary">
+                        <i class="fas fa-upload"></i> Select Image
+                    </button>
+                    <button id="predictBtn" class="btn btn-primary" disabled>
+                        <i class="fas fa-search"></i> Detect Disease
+                    </button>
+                </div>
+            </div>
+
+            <div id="resultContainer" class="result-container" style="display: none;">
+                <div class="result-header">
+                    <h2>Analysis Result</h2>
+                    <span id="confidenceScore" class="confidence-badge">Confidence: 0%</span>
+                </div>
+                <div class="result-content">
+                    <div id="predictionResult" class="prediction"></div>
+                    <div class="disease-info">
+                        <div id="diseaseDescription" class="description"></div>
+                        <div id="diseaseTreatment" class="treatment"></div>
+                    </div>
+                </div>
+                <button id="newScanBtn" class="btn btn-secondary">
+                    <i class="fas fa-redo"></i> New Scan
+                </button>
+            </div>
+        </main>
+
+        <footer>
+            <p>Rice Leaf Disease Detection System &copy; 2025</p>
+        </footer>
+    </div>
+
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <p>Analyzing image...</p>
     </div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
